@@ -41,6 +41,7 @@ export async function GET(
             data: {
                 movie,
                 sentiment,
+                reviews,
                 reviewCount: reviews.length,
             },
         });

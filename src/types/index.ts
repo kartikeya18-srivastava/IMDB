@@ -20,6 +20,7 @@ export interface AnalysisResponse {
     data: {
         movie: Movie;
         sentiment: Sentiment;
+        reviews: string[];
         reviewCount: number;
     };
     message?: string;

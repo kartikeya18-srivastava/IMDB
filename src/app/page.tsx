@@ -4,12 +4,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import SearchBar from "@/components/SearchBar";
 import MovieCard from "@/components/MovieCard";
 import SentimentCard from "@/components/SentimentCard";
+import ReviewsCard from "@/components/ReviewsCard";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ErrorMessage from "@/components/ErrorMessage";
 import { useMovieAnalysis } from "@/hooks/useMovieAnalysis";
 
 export default function Home() {
-    const { movie, sentiment, reviewCount, loading, error, analyze, reset } =
+    const { movie, sentiment, reviews, reviewCount, loading, error, analyze, reset } =
         useMovieAnalysis();
 
     const handleSearch = (imdbId: string) => {
@@ -98,6 +99,9 @@ export default function Home() {
                                 sentiment={sentiment}
                                 reviewCount={reviewCount}
                             />
+                            {reviews.length > 0 && (
+                                <ReviewsCard reviews={reviews} />
+                            )}
                         </motion.div>
                     )}
                 </AnimatePresence>
