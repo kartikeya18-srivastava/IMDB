@@ -6,6 +6,7 @@ import type { Movie, Sentiment, AnalysisResponse } from "@/types";
 interface UseMovieAnalysisReturn {
     movie: Movie | null;
     sentiment: Sentiment | null;
+    reviews: string[];
     reviewCount: number;
     loading: boolean;
     error: string | null;
@@ -16,6 +17,7 @@ interface UseMovieAnalysisReturn {
 export const useMovieAnalysis = (): UseMovieAnalysisReturn => {
     const [movie, setMovie] = useState<Movie | null>(null);
     const [sentiment, setSentiment] = useState<Sentiment | null>(null);
+    const [reviews, setReviews] = useState<string[]>([]);
     const [reviewCount, setReviewCount] = useState(0);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -25,6 +27,7 @@ export const useMovieAnalysis = (): UseMovieAnalysisReturn => {
         setError(null);
         setMovie(null);
         setSentiment(null);
+        setReviews([]);
 
         try {
             const res = await fetch(`/api/movie/${imdbId}`);
@@ -36,6 +39,7 @@ export const useMovieAnalysis = (): UseMovieAnalysisReturn => {
 
             setMovie(data.data.movie);
             setSentiment(data.data.sentiment);
+            setReviews(data.data.reviews);
             setReviewCount(data.data.reviewCount);
         } catch (err) {
             if (err instanceof Error) {
@@ -51,9 +55,10 @@ export const useMovieAnalysis = (): UseMovieAnalysisReturn => {
     const reset = () => {
         setMovie(null);
         setSentiment(null);
+        setReviews([]);
         setReviewCount(0);
         setError(null);
     };
 
-    return { movie, sentiment, reviewCount, loading, error, analyze, reset };
+    return { movie, sentiment, reviews, reviewCount, loading, error, analyze, reset };
 };
